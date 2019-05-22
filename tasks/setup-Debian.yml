@@ -1,4 +1,21 @@
 ---
+- name: add mysql repo key
+  apt_key:
+    id: "{{ mysql_apt_key }}"
+    state: present
+    keyserver: keyserver.ubuntu.com
+  when: mysql_apt_key is defined and mysql_apt_key
+  register: mysql_apt_key_installed
+
+- name: add mysql repo
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+    update_cache: yes
+  when: mysql_apt_key_installed is success and mysql_apt_repo is defined
+  register: mysql_repo_installed
+  loop: "{{ mysql_apt_repo }}"
+
 - name: Check if MySQL is already installed.
   stat: path=/etc/init.d/mysql
   register: mysql_installed
