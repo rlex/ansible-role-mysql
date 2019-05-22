@@ -1,10 +1,10 @@
 ---
 - name: add mysql repo key
   apt_key:
-    id: "{{ mysql_apt_key }}"
+    id: "{{ mysql_apt_repo_key }}"
     state: present
     keyserver: keyserver.ubuntu.com
-  when: mysql_apt_key is defined and mysql_apt_key
+  when: mysql_apt_repo_key is defined and mysql_apt_repo_key
   register: mysql_apt_key_installed
 
 - name: add mysql repo
