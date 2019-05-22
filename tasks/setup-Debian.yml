@@ -9,12 +9,11 @@
 
 - name: add mysql repo
   apt_repository:
-    repo: "{{ item }}"
+    repo: "{{ mysql_apt_repo }}"
     state: present
     update_cache: yes
   when: mysql_apt_key_installed is success and mysql_apt_repo is defined
   register: mysql_repo_installed
-  loop: "{{ mysql_apt_repo }}"
 
 - name: Check if MySQL is already installed.
   stat: path=/etc/init.d/mysql
